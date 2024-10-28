@@ -29,7 +29,10 @@
             <meta name="robots" content="noindex">
         @endif
 
-        <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:300,300i,400,400i,700,700i,800,800i" rel="stylesheet">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+
 
         <link rel="stylesheet" href="{{ mix('css/main.css', 'assets/build') }}">
         
@@ -41,6 +44,8 @@
     <body>
         <div id="app">
             <main role="main">
+                <SiteHeader></SiteHeader>
+                <site-header></site-header>
                 @yield('body')
             </main>
         </div>

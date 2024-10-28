@@ -9,16 +9,22 @@ const lazyLoadInstance = new LazyLoad({
     elements_selector: ".lazy"
 });
 
-// Primitive Vue Components
+
+// Base Vue Components
 import Search from './components/Search.vue';
-import PrimitiveForm from './components/PrimitiveForm.vue';
-import Blog from './components/blog/Blog.vue';
+
+// built Vue Components
+import SiteHeader from "./components/SiteHeader.vue";
+
+
 
 createApp({
     components: {
         Search,
-        PrimitiveForm,
-        Blog
+
+        // Built VUE Components CYBORG LOGO
+        SiteHeader,
+
     },
 }).mount('#app')
 

@@ -17,16 +17,23 @@ module.exports = {
       fontFamily: {
         sans: ["Nunito Sans"],
         mono: ["monospace"],
+        'primary': ["'Inter', sans-serif"],
       },
       colors: {
         brand: {
-          // different shades of the brand. 100 - 900, increment by 100
+          100: '#0F172A',
+          200: '#00C9B1',
+
+          'dark-blue': '#0F172A',
         },
         'brand-grey': {
           // different shades of grey for the brand. 100 - 900, increment by 100
         },
         "primitive-off-white": '#d9d2be',
         'bind-blue': '#248dee',
+      },
+      maxWidth: {
+        'mobile': '92.5%',
       },
       spacing: {
         "mobile": '92.5%',
