@@ -1,0 +1,21 @@
+.hidden-dialog {
+  opacity: 0;
+  background: rgba(1, 24, 47, 0.77);
+  z-index: -1000;
+}
+
+.card {
+  transition: 0.3s ease;
+  transform: scale(0);
+  opacity: 0;
+}
+
+.show-dialog {
+  opacity: 1;
+  z-index: 1000;
+  & .card {
+    transform: scale(1);
+    opacity: 1;
+  }
+
+}

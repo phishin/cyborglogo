@@ -1,0 +1,6 @@
+// Alpine components load in right away on page load until alpine.js is
+// loaded. This will hide the Alpine components until page load.
+// Add x-cloak to alpine components that need to be hidden
+[x-cloak] {
+  display: none !important;
+}

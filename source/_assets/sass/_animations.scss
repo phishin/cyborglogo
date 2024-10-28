@@ -1,0 +1,93 @@
+// Simple animations to add to components to reveal on scroll. Add "js-scroll" as a class name
+// then followed with your choice of the animation. Ex: "js-scroll js-scroll-fade-right"
+// If element is in the initial view of the page check the "slide" animations
+
+.slide-in {
+  animation: slideIn 1.25s linear;
+}
+
+.slide-in-left {
+  animation: slideInLeft 1.25s linear;
+}
+
+.slide-up {
+  animation: slideUp 1.25s linear;
+}
+
+@keyframes slideIn {
+  0% {
+    transform: translateX(-80px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0px);
+    opacity: 1;
+  }
+}
+
+@keyframes slideInLeft {
+  0% {
+    transform: translateX(80px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0px);
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  0% {
+    transform: translateY(-80px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0px);
+    opacity: 1;
+  }
+}
+
+//scroll reveal animations
+.js-scroll-fade-up {
+  transition: 1s ease;
+  transform: translatey(80px);
+  opacity: 0;
+}
+
+.js-scroll-fade-up.scrolled {
+  transform: translatey(0px);
+  opacity: 1;
+}
+
+.js-scroll-fade-down {
+  transition: 1s ease;
+  transform: translatey(-80px);
+  opacity: 0;
+}
+
+.js-scroll-fade-down.scrolled {
+  transform: translatey(0px);
+  opacity: 1;
+}
+
+.js-scroll-fade-left {
+  transition: 1s ease;
+  transform: translateX(80px);
+  opacity: 0;
+}
+
+.js-scroll-fade-left.scrolled {
+  transform: translateX(0px);
+  opacity: 1;
+}
+
+.js-scroll-fade-right {
+  transition: 1s ease;
+  transform: translateX(-80px);
+  opacity: 0;
+}
+
+.js-scroll-fade-right.scrolled {
+  transform: translateX(0px);
+  opacity: 1;
+}

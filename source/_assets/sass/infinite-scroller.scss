@@ -1,0 +1,27 @@
+.scroll-container {
+  overflow: hidden;
+  white-space: nowrap;
+  position: relative;
+}
+
+.scroll-list {
+  display: flex;
+}
+
+.scroll-item {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+
+  // gap between items
+  padding: 0 32px;
+}
+
+@keyframes scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}

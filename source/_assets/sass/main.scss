@@ -1,0 +1,17 @@
+@tailwind base;
+@tailwind components;
+
+// Code syntax highlighting,
+// powered by https://highlightjs.org
+@import '~highlight.js/styles/a11y-light.css';
+
+//@import 'base';
+@import 'navigation';
+@import 'mailchimp';
+@import 'blog';
+@import 'alpine-js-base';
+@import 'animations';
+@import 'primitive/dialog';
+@import 'infinite-scroller';
+
+@tailwind utilities;

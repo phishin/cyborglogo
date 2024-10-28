@@ -1,0 +1,39 @@
+{
+    "private": true,
+    "scripts": {
+        "dev": "mix",
+        "watch": "mix watch",
+        "prod": "mix --production",
+        "production": "mix --production"
+    },
+    "devDependencies": {
+        "@tailwindcss/aspect-ratio": "^0.4.0",
+        "@tailwindcss/forms": "^0.5.0",
+        "@tailwindcss/line-clamp": "^0.3.1",
+        "@tailwindcss/typography": "^0.5.2",
+        "@vue/compat": "^3.1.0-0",
+        "@vue/compiler-sfc": "^3.1.0-0",
+        "autoprefixer": "^10.4.2",
+        "axios": "^0.21.1",
+        "browser-sync": "^2.27.4",
+        "browser-sync-webpack-plugin": "^2.3.0",
+        "fuse.js": "^6.4.6",
+        "highlight.js": "^10.5.0",
+        "laravel-mix": "^6.0.43",
+        "laravel-mix-jigsaw": "^2.0.0",
+        "mix-tailwindcss": "^1.3.0",
+        "postcss": "^8.4.8",
+        "postcss-import": "^14.0.2",
+        "sass": "^1.48.0",
+        "sass-loader": "^12.4.0",
+        "tailwindcss": "^3.0.23",
+        "vue": "^3.2.37",
+        "vue-loader": "^16.8.3"
+    },
+    "dependencies": {
+        "@headlessui/vue": "^1.6.7",
+        "@heroicons/vue": "^1.0.6",
+        "quicklink": "^2.0.0",
+        "vanilla-lazyload": "^12.5.1"
+    }
+}
