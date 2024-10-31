@@ -15,7 +15,7 @@
         "@vue/compiler-sfc": "^3.1.0-0",
         "autoprefixer": "^10.4.2",
         "axios": "^0.21.1",
-        "browser-sync": "^2.27.4",
+        "browser-sync": "^3.0.3",
         "browser-sync-webpack-plugin": "^2.3.0",
         "fuse.js": "^6.4.6",
         "highlight.js": "^10.5.0",
@@ -34,6 +34,7 @@
         "@headlessui/vue": "^1.6.7",
         "@heroicons/vue": "^1.0.6",
         "quicklink": "^2.0.0",
+        "swiper": "^11.1.14",
         "vanilla-lazyload": "^12.5.1"
     }
 }

@@ -15,14 +15,16 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ["Nunito Sans"],
+        sans: ["'Inter', sans-serif"],
         mono: ["monospace"],
         'primary': ["'Inter', sans-serif"],
       },
       colors: {
         brand: {
           100: '#0F172A',
-          200: '#00C9B1',
+          200: '#00DBC9',
+          300: '#00C9B1',
+          400: '#00B99E',
 
           'dark-blue': '#0F172A',
         },

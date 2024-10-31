@@ -16,14 +16,22 @@ import Search from './components/Search.vue';
 // built Vue Components
 import SiteHeader from "./components/SiteHeader.vue";
 
+//homepage
+import HomeHero from "./components/homepage/HomeHero.vue";
+import OurLogos from "./components/homepage/OurLogos.vue";
 
-
+/* vue create app */
 createApp({
     components: {
         Search,
 
         // Built VUE Components CYBORG LOGO
         SiteHeader,
+
+        //homepage
+        HomeHero,
+        OurLogos,
+
 
     },
 }).mount('#app')
