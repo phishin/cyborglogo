@@ -1,0 +1,1 @@
+<script setup>import {defineProps, ref } from "vue";import ImageElement from "./ImageElement.vue";</script><template>  <footer class="footer w-full relative">  </footer></template><style scoped lang="scss"></style>

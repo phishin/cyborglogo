@@ -10,7 +10,10 @@ module.exports = {
     "./source/_nav/**/*.php",
     "./source/_components/**/*.php",
     "./source/index.blade.php",
+
     // Add more files to be watched here. See index.blade.php one line above for example
+
+
   ],
   theme: {
     extend: {
@@ -25,14 +28,17 @@ module.exports = {
           200: '#00DBC9',
           300: '#00C9B1',
           400: '#00B99E',
-
+          500: '#00AA8B',
           'dark-blue': '#0F172A',
         },
-        'brand-grey': {
-          // different shades of grey for the brand. 100 - 900, increment by 100
+        neutral: {
+          100: '#F3F4F6',
+          200: '#E5E7EB',
+          300: '#9CA3AF',
+          500: '#6B7280',
+          700: '#374151',
+          900: '#111827',
         },
-        "primitive-off-white": '#d9d2be',
-        'bind-blue': '#248dee',
       },
       maxWidth: {
         'mobile': '92.5%',
@@ -48,7 +54,7 @@ module.exports = {
   },
   plugins: [
     require('@tailwindcss/typography'),
-    require('@tailwindcss/forms'),
+    // require('@tailwindcss/forms'),
     function({ addUtilities }) {
       const newUtilities = {
         ".transition-fast": {

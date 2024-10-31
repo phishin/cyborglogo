@@ -13,40 +13,63 @@ const lazyLoadInstance = new LazyLoad({
 // Base Vue Components
 import Search from './components/Search.vue';
 
-// built Vue Components
-import SiteHeader from "./components/SiteHeader.vue";
+// Global Vue Components
+import HeaderSection from "./components/HeaderSection.vue";
+import FooterSection from "./components/FooterSection.vue";
+import SignupModal from "./components/SignupModal.vue";
 
 //homepage
 import HomeHero from "./components/homepage/HomeHero.vue";
 import OurLogos from "./components/homepage/OurLogos.vue";
+import HomePricing from "./components/homepage/HomePricing.vue";
+import OurCompetition from "./components/homepage/OurCompetition.vue";
+
+// Forms
+import ContactSupportForm from "./components/homepage/ContactSupportForm.vue";
+import FrequentlyAskedQuestions from "./components/homepage/FrequentlyAskedQuestions.vue";
+
+
 
 /* vue create app */
 createApp({
     components: {
         Search,
 
-        // Built VUE Components CYBORG LOGO
-        SiteHeader,
+        // Global Components
+        HeaderSection,
+        FooterSection,
 
         //homepage
         HomeHero,
         OurLogos,
+        HomePricing,
+        OurCompetition,
+        FrequentlyAskedQuestions,
 
+        // forms
+        ContactSupportForm,
+
+        // Global
+        SignupModal,
 
     },
+
+    mounted() {
+
+    },
+
+    created() {
+
+    },
+
+
+
 }).mount('#app')
 
 
 // To utilize the dialog opening function you must add 'dialog-button' to the container of
 // a button. Then add 'data-dialog' as an attribute to the button tag. The
 // value of the data-dialog must match the dialogs id.
-document.querySelectorAll('.dialog-button button').forEach(button => {
-    button.addEventListener('click', e => {
-        e.stopPropagation();
-        document.querySelector('#' + e.target.dataset.dialog).classList.toggle('show-dialog');
-    })
-})
-
 
 if (document.querySelector('.scroll-list')) {
     document.querySelectorAll('.scroll-list').forEach(scrollList => {

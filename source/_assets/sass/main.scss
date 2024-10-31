@@ -11,12 +11,10 @@
 @import 'blog';
 @import 'alpine-js-base';
 @import 'animations';
-@import 'primitive/dialog';
 @import 'infinite-scroller';
 
 
-// webfonts
-
+/* base styles */
 .site-container {
   padding: 0 24px;
   margin: 0 auto;
@@ -34,14 +32,14 @@
 
   &.site-container-alt {
     @media only screen and (min-width: 1300px) {
-      max-width: 1220px;
+      max-width: 1240px;
       margin: 0 auto;
     }
   }
 
 }
 
-h1, h2, h3, h4, h5 {
+h1, h2, h3, h4, h5, h6, p {
   display: block;
   position: relative;
 }

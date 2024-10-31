@@ -11,9 +11,9 @@ return [
 
     'production' => false,
 
-    'siteName' => 'Primitive CMS',
+    'siteName' => 'Cyborg Logo',
 
-    'siteDescription' => 'This is just a demo of the new CMS tool.',
+    'siteDescription' => 'The official site of Cyborg Logo LLC.',
 
     'siteJsonLd' => '',
 

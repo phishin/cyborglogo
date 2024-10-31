@@ -30,7 +30,7 @@
                     </p>
 
                     <div class="bottom-button relative block w-full pt-[54px] lg:pt-[58px]">
-                        <a href="#" class="cta-btn has-arrow bg-brand-300 flex flex-row flex-nowrap justify-center items-center relative w-full text-white uppercase font-black text-[18px] leading-[1] tracking-[2px] py-[25px] px-[33px] transition transition-fast hover:bg-black md:max-w-fit">
+                        <a href="#" class="cta-btn has-arrow bg-brand-300 flex flex-row flex-nowrap justify-center items-center relative w-full text-white uppercase font-black text-[18px] leading-[1.125] tracking-[2px] py-[25px]  px-[25px] sm:px-[33px] transition transition-fast hover:bg-black md:max-w-fit">
                             <span class="text relative flex-auto pr-[12px]">
                                 LET’S DESIGN MY LOGO
                             </span>
@@ -58,8 +58,8 @@
                 </h3>
                 <span class="right-border hidden md:block w-[40px] h-[6px] bg-black mr-auto"></span>
             </div>
-            <div class="blade-layout-wrapper w-full relative flex flex-row flex-wrap">
 
+            <div class="blade-layout-wrapper w-full relative flex flex-row flex-wrap">
                 <div class="left-col w-full relative md:max-w-[50%] md:pr-[25px] lg:pr-[35px] pb-[42px] md:pb-0">
                     <h3 class="block relative w-full font-bold text-[36px] md:text-[40px] lg:text-[48px] leading-[1.1] pb-[24px]">
                         What do you have in common with a yoga instructor?
@@ -68,7 +68,6 @@
                         The same logo — if you use our competitors!
                     </h4>
                 </div>
-
                 <div class="right-col w-full relative md:max-w-[50%] md:pl-[25px] lg:pl-[35px]">
                     <p class="block relative w-full text-black pb-[30px] text-[24px] md:text-[30px] lg:text-[36px] leading-[28px] md:leading-[34px] lg:leading-[40px]">
                         Every construction expertise is different, just like our logos. For just $99, get a logo that's built to show off your specific industry, not some cute little logo.
@@ -88,47 +87,16 @@
                         </span>
                     </a>
                 </div>
-
             </div>
         </div>
     </section>
 
-    <section class="home-pricing w-full relative block font-primary bg-black pt-[62px] pb-[48px]" data-section-id="no-bs-pricing">
-        <div class="site-container site-container-alt flex flex-row flex-wrap">
-            <div class="left-col w-full relative md:max-w-[45%] lg:max-w-[50%] md:pr-[40px] lg:pr-[58px]">
-                <div class="top-title w-full relative block">
-                    <span class="top-border block w-full relative h-[10px] bg-white"></span>
-                    <h3 class="block relative w-full text-center font-black text-white leading-[1] text-[28px] md:text-[30px] lg:text-[36px] py-[20px] lg:py-[30px] uppercase">NO BULL$#IT PRICING</h3>
-                    <span class="bottom-border block w-full relative h-[10px] bg-white"></span>
-                </div>
+    <home-pricing></home-pricing>
 
-                <div class="middle-large-pricing relative flex flex-row items-center justify-center w-full py-[20px] text-brand-200">
-                    <span class="dollar text-[90px] md:text-[72px] lg:text-[150px] font-black leading-[1] w-auto max-w-fit pr-[5px] pb-[25px]">
-                        $
-                    </span>
-                    <span class="lg-number text-[200px] md:text-[185px] lg:text-[300px] font-black leading-[1]">99</span>
-                </div>
+    <our-competition></our-competition>
 
-                <div class="bottom-title w-full relative block">
-                    <span class="top-border block w-full relative h-[10px] bg-white"></span>
-                    <h3 class="block uppercase relative w-full text-center font-black text-white leading-[1] text-[28px] md:text-[30px] lg:text-[36px] py-[20px] lg:py-[30px]">No Hidden Fees</h3>
-                    <span class="bottom-border block w-full relative h-[10px] bg-white"></span>
-                </div>
-            </div>
-            <div class="right-col w-full relative md:flex-1 md:pl-[40px] lg:pl-[58px]">
-                <div class="right-col-wrapper w-full h-full relative">
-                    <ul class="block w-full relative pl-0 pb-[43px] pt-[30px] text-white text-[24px] font-black md:ml-auto">
-                        <li class="leading-[1.1] pb-[25px] block w-full"> Exclusive industry-focused designs</li>
-                        <li class="leading-[1.1] pb-[25px] block w-full"> Advanced customization options</li>
-                        <li class="leading-[1.1] pb-[25px] block w-full"> High-res print & web files</li>
-                        <li class="leading-[1.1] pb-[25px] block w-full"> Multiple logo variations </li>
-                        <li class="leading-[1.1] pb-[25px] block w-full"> Full ownership rights </li>
-                        <li class="leading-[1.1] pb-[25px] block w-full"> Branding guidelines </li>
-                        <li class="leading-[1.1] pb-[25px] block w-full"> Social media kit</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section>
+    <frequently-asked-questions></frequently-asked-questions>
+
+    <contact-support-form></contact-support-form>
 
 @stop
