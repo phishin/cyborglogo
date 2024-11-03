@@ -57,6 +57,7 @@
                             <signup-modal></signup-modal>
                             <login-modal></login-modal>
                     </main>
+                <footer-section></footer-section>
             </main-site-wrapper-screen>
         </div>
 
