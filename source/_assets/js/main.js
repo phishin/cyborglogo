@@ -9,6 +9,13 @@ const lazyLoadInstance = new LazyLoad({
     elements_selector: ".lazy"
 });
 
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { Observer } from "gsap/Observer";
+import { ScrollToPlugin } from "gsap/ScrollToPlugin";
+import { TextPlugin } from "gsap/TextPlugin";
+gsap.registerPlugin(ScrollTrigger,Observer,ScrollToPlugin,TextPlugin);
+
 
 // Base Vue Components
 import Search from './components/Search.vue';
@@ -17,16 +24,23 @@ import Search from './components/Search.vue';
 import HeaderSection from "./components/HeaderSection.vue";
 import FooterSection from "./components/FooterSection.vue";
 import SignupModal from "./components/SignupModal.vue";
+import LoginModal from "./components/LoginModal.vue";
+import MainSiteWrapperScreen from "./components/MainSiteWrapperScreen.vue";
 
 //homepage
 import HomeHero from "./components/homepage/HomeHero.vue";
 import OurLogos from "./components/homepage/OurLogos.vue";
 import HomePricing from "./components/homepage/HomePricing.vue";
 import OurCompetition from "./components/homepage/OurCompetition.vue";
+import CenteredTextCta from "./components/homepage/CenteredTextCta.vue";
+import HowItWorks from "./components/homepage/HowItWorks.vue";
+import StartNowCta from "./components/homepage/StartNowCta.vue";
+
 
 // Forms
 import ContactSupportForm from "./components/homepage/ContactSupportForm.vue";
 import FrequentlyAskedQuestions from "./components/homepage/FrequentlyAskedQuestions.vue";
+
 
 
 
@@ -38,6 +52,7 @@ createApp({
         // Global Components
         HeaderSection,
         FooterSection,
+        MainSiteWrapperScreen,
 
         //homepage
         HomeHero,
@@ -45,12 +60,16 @@ createApp({
         HomePricing,
         OurCompetition,
         FrequentlyAskedQuestions,
+        CenteredTextCta,
+        HowItWorks,
+        StartNowCta,
 
         // forms
         ContactSupportForm,
 
         // Global
         SignupModal,
+        LoginModal,
 
     },
 

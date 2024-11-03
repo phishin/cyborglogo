@@ -49,11 +49,15 @@
 
     <body>
         <div id="app">
-            <main role="main">
-                <header-section></header-section>
-                    @yield('body')
-                <signup-modal></signup-modal>
-            </main>
+            <main-site-wrapper-screen :show-password-screen="true">
+                <div id="site-overlay" class="site-overlay pointer-events-none absolute w-full h-full inset-0 bg-black opacity-0"></div>
+                    <header-section></header-section>
+                    <main role="main">
+                            @yield('body')
+                            <signup-modal></signup-modal>
+                            <login-modal></login-modal>
+                    </main>
+            </main-site-wrapper-screen>
         </div>
 
         <script src="{{ mix('js/main.js', 'assets/build') }}"></script>

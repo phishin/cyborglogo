@@ -29,7 +29,10 @@ module.exports = {
           300: '#00C9B1',
           400: '#00B99E',
           500: '#00AA8B',
+          600: '#00DCC8',
           'dark-blue': '#0F172A',
+          'link-blue': '#00A5FD',
+          'electric-blue': '#00A5FD',
         },
         neutral: {
           100: '#F3F4F6',

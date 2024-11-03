@@ -30,11 +30,11 @@
                     </p>
 
                     <div class="bottom-button relative block w-full pt-[54px] lg:pt-[58px]">
-                        <a href="#" class="cta-btn has-arrow bg-brand-300 flex flex-row flex-nowrap justify-center items-center relative w-full text-white uppercase font-black text-[18px] leading-[1.125] tracking-[2px] py-[25px]  px-[25px] sm:px-[33px] transition transition-fast hover:bg-black md:max-w-fit">
+                        <a href="#" class="cta-btn has-arrow bg-brand-300 flex flex-row flex-nowrap justify-center items-center relative w-full text-white uppercase font-black text-[18px] leading-[1.125] tracking-[2px] py-[25px]  px-[25px] sm:px-[33px] transition transition-fast hover:bg-black md:max-w-fit group">
                             <span class="text relative flex-auto pr-[12px]">
                                 LET’S DESIGN MY LOGO
                             </span>
-                            <span class="icon flex-0 max-w-fit w-auto relative">
+                            <span class="icon flex-0 max-w-fit w-auto relative group-hover:rotate-45 transition transition-fast">
                                 <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M0.75 13.25L13.25 0.75M13.25 0.75L3.875 0.75M13.25 0.75V10.125" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                                 </svg>
@@ -43,8 +43,6 @@
                     </div>
                 </div>
             </div>
-
-
         </div>
     </section>
 
@@ -54,7 +52,7 @@
                 <span class="top-border bg-black block w-full max-w-[163px] h-[6px] mx-auto mb-[24px] md:hidden"></span>
                 <span class="left-border hidden md:block w-[40px] h-[6px] bg-black ml-auto"></span>
                 <h3 class="flex flex-row justify-center relative text-center font-black text-[30px] md:text-[40px] lg:text-[48px] leading-[1] uppercase max-w-[345px] sm:max-w-[400px] md:max-w-fit mx-auto md:mx-0 md:px-[20px] lg:px-[22px]">
-                    THE CYBORG DIFFERENCE
+                    The Cyborg Difference
                 </h3>
                 <span class="right-border hidden md:block w-[40px] h-[6px] bg-black mr-auto"></span>
             </div>
@@ -91,12 +89,18 @@
         </div>
     </section>
 
-    <home-pricing></home-pricing>
+    <home-pricing data-section-id="home-pricing"></home-pricing>
 
-    <our-competition></our-competition>
+    <our-competition data-section-id="our-competition"></our-competition>
 
-    <frequently-asked-questions></frequently-asked-questions>
+    <centered-text-cta></centered-text-cta>
 
-    <contact-support-form></contact-support-form>
+    <how-it-works></how-it-works>
+
+    <start-now-cta></start-now-cta>
+
+    <frequently-asked-questions data-section-id="faqs"></frequently-asked-questions>
+
+    <contact-support-form data-section-id="contact-support-form"></contact-support-form>
 
 @stop
