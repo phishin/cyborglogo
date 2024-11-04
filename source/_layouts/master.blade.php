@@ -40,6 +40,7 @@
         <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
 
 
+
         <link rel="stylesheet" href="{{ mix('css/main.css', 'assets/build') }}">
         
         <x-structured-data />
@@ -64,6 +65,21 @@
         <script src="{{ mix('js/main.js', 'assets/build') }}"></script>
 
         @stack('scripts')
+
+        <script>
+            console.log(window.location.pathname);
+
+            // Disable back button only for /create-my-logo
+            if (window.location.pathname === '/create-my-logo/' || window.location.pathname === '/create-my-logo') {
+
+                history.replaceState(null, document.title, window.location.href);
+                console.log(' create my logo page ');
+
+                window.addEventListener('popstate', function(event) {
+                    history.pushState(null, document.title, window.location.href);
+                });
+            }
+        </script>
 
         <!-- leave snippet below to enable prefetching -->
         <!-- basically don't remove it unless you know it is breaking something :) -->

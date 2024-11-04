@@ -1,6 +1,6 @@
 window.axios = require('axios');
 window.fuse = require('fuse.js').default;
-import { createApp } from 'vue'
+import { createApp, reactive, provide, inject } from 'vue';
 
 // Lazyload
 import LazyLoad from "vanilla-lazyload";
@@ -41,7 +41,14 @@ import StartNowCta from "./components/homepage/StartNowCta.vue";
 import ContactSupportForm from "./components/homepage/ContactSupportForm.vue";
 import FrequentlyAskedQuestions from "./components/homepage/FrequentlyAskedQuestions.vue";
 
+// Logo creation screens
+import CreationFlowScreens from "./CreationFlow/CreationFlowScreens.vue";
 
+
+// Create the reactive global state
+const globalCreationState = reactive({
+    creationStep: 0
+});
 
 
 /* vue create app */
@@ -71,6 +78,10 @@ createApp({
         SignupModal,
         LoginModal,
 
+
+        // create logo screens
+        CreationFlowScreens
+
     },
 
     mounted() {
@@ -80,6 +91,11 @@ createApp({
     created() {
 
     },
+
+    setup() {
+        provide('globalCreationState', globalCreationState);
+    },
+
 
 
 
