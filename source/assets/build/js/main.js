@@ -19565,9 +19565,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 /* harmony import */ var _components_homepage_FrequentlyAskedQuestions_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/homepage/FrequentlyAskedQuestions.vue */ "./source/_assets/js/components/homepage/FrequentlyAskedQuestions.vue");
-/* harmony import */ var fuse_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! fuse.js */ "./node_modules/fuse.js/dist/fuse.esm.js");
+/* harmony import */ var _components_homepage_ContactSupportForm_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/homepage/ContactSupportForm.vue */ "./source/_assets/js/components/homepage/ContactSupportForm.vue");
+/* harmony import */ var fuse_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! fuse.js */ "./node_modules/fuse.js/dist/fuse.esm.js");
 
 
+
+
+
+// set variables and refs
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   __name: 'CreationFlowStep1',
@@ -19597,7 +19602,7 @@ __webpack_require__.r(__webpack_exports__);
     }];
 
     // Fuse.js setup
-    var fuse = new fuse_js__WEBPACK_IMPORTED_MODULE_2__["default"](industries, {
+    var fuse = new fuse_js__WEBPACK_IMPORTED_MODULE_3__["default"](industries, {
       keys: ["name"],
       threshold: 0.3 // Adjust sensitivity (0.0 is very strict, 1.0 is very lenient)
     });
@@ -19611,11 +19616,17 @@ __webpack_require__.r(__webpack_exports__);
 
     // Hide dropdown on blur with a slight delay to allow selection
     var hideDropdown = function hideDropdown() {
+      // Clear `query` if it doesn't match any industry in the list
+      var matchingIndustrySearchQuery = industries.find(function (industry) {
+        return industry.name.toLowerCase() === query.value.toLowerCase();
+      });
+      if (!matchingIndustrySearchQuery) {
+        query.value = ""; // Clear the field if there's no match
+      }
       setTimeout(function () {
         showDropdown.value = false;
       }, 100);
     };
-
     // Computed property to check if input should be in "focused" state
     var isFocused = (0,vue__WEBPACK_IMPORTED_MODULE_0__.computed)(function () {
       return showDropdown.value || query.value.trim() !== "";
@@ -19636,7 +19647,8 @@ __webpack_require__.r(__webpack_exports__);
       onMounted: vue__WEBPACK_IMPORTED_MODULE_0__.onMounted,
       computed: vue__WEBPACK_IMPORTED_MODULE_0__.computed,
       FrequentlyAskedQuestions: _components_homepage_FrequentlyAskedQuestions_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
-      Fuse: fuse_js__WEBPACK_IMPORTED_MODULE_2__["default"]
+      ContactSupportForm: _components_homepage_ContactSupportForm_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
+      Fuse: fuse_js__WEBPACK_IMPORTED_MODULE_3__["default"]
     };
     Object.defineProperty(__returned__, '__isScriptSetup', {
       enumerable: false,
@@ -20414,9 +20426,9 @@ var _hoisted_2 = {
   "class": "block text-6xl font-black py-[100px]"
 };
 function render(_ctx, _cache, $props, $setup, $data, $options) {
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("section", _hoisted_1, [$setup.globalCreationState.creationStep === 1 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)($setup["CreationFlowStep1"], {
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("section", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Step 1 "), $setup.globalCreationState.creationStep === 1 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)($setup["CreationFlowStep1"], {
     key: 0
-  })) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  })) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" INTERNAL DEV STUFF *** REMOVE FOR LAUNCH "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
     "class": "w-full py-[30px] flex items-center justify-center"
   }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
     "class": "bg-black text-white p-[10px]",
@@ -20479,7 +20491,7 @@ var _hoisted_8 = {
 };
 var _hoisted_9 = ["onMousedown"];
 var _hoisted_10 = {
-  "class": "bottom-content w-full relative"
+  "class": "bottom-content w-full relative lg:mt-[290px] hidden lg:block"
 };
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("section", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" step progress bar "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
@@ -20514,7 +20526,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       }, ["prevent"]),
       "class": "dropdown-item text-black text-[16px] md:text-[18px] lg:text-[20px] font-medium lg:font-semibold py-[17px] px-[20px] lg:py-[12px] hover:text-brand-electric-blue hover:bg-neutral-100 cursor-pointer transition transition-fast"
     }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(result.item.name), 41 /* TEXT, PROPS, HYDRATE_EVENTS */, _hoisted_9);
-  }), 128 /* KEYED_FRAGMENT */))])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_10, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["FrequentlyAskedQuestions"])])], 64 /* STABLE_FRAGMENT */);
+  }), 128 /* KEYED_FRAGMENT */))])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_10, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["FrequentlyAskedQuestions"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["ContactSupportForm"])])], 64 /* STABLE_FRAGMENT */);
 }
 
 /***/ }),
@@ -21786,7 +21798,7 @@ __webpack_require__.r(__webpack_exports__);
 var _hoisted_1 = {
   "class": "home-hero relative block w-full bg-brand-200"
 };
-var _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div class=\"home-container site-container w-full relative\"><div class=\"hero-text w-full relative pt-[33px] pb-[43px] md:pt-[70px] md:pb-[55px] lg:pt-[155px] lg:pb-[158px] font-primary text-center\"><h1 class=\"block relative text-black font-extrabold tracking-[-2px] text-[48px] md:text-[60px] lg:text-[90px] leading-[1] pb-[40px] max-w-[1156px] mx-auto\"> You got pride in your work, now have a logo to match </h1><h2 class=\"block relative text-black font-medium text-[32px] lg:text-[44px] lg:leading-[48px] leading-[37px] tracking-[-1px] lg:max-w-[850px] mx-auto\"> Designed by professionals, delivered by AI — built for contractors </h2><div class=\"hero-button w-full block pt-[45px]\"><a href=\"/create-my-logo\" class=\"flex flex-row items-center justify-center relative py-[25px] px-[25px] sm:px-[30px] text-white font-primary font-black text-[18px] leading-[1.2] uppercase tracking-[2px] bg-black max-w-fit mx-auto\"><span class=\"text pr-[12px] w-full\"> Let&#39;s Design My Logo </span><span class=\"icon w-auto flex-0\"><svg width=\"20\" height=\"20\" viewBox=\"0 0 20 20\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M3.75 16.25L16.25 3.75M16.25 3.75L6.875 3.75M16.25 3.75V13.125\" stroke=\"white\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg></span></a></div></div></div>", 1);
+var _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div class=\"home-container site-container w-full relative\"><div class=\"hero-text w-full relative pt-[33px] pb-[43px] md:pt-[70px] md:pb-[55px] lg:pt-[155px] lg:pb-[158px] font-primary text-center\"><h1 class=\"block relative text-black font-extrabold tracking-[-2px] text-[48px] md:text-[60px] lg:text-[90px] leading-[1] pb-[40px] max-w-[1156px] mx-auto\"> You got pride in your work, now have a logo to match </h1><h2 class=\"block relative text-black font-medium text-[32px] lg:text-[44px] lg:leading-[48px] leading-[37px] tracking-[-1px] lg:max-w-[850px] mx-auto\"> Designed by professionals, delivered by AI — built for contractors </h2><div class=\"hero-button w-full block pt-[45px]\"><a href=\"/create-my-logo\" class=\"flex flex-row items-center justify-center relative py-[25px] px-[25px] sm:px-[30px] text-white font-primary font-black text-[18px] leading-[1.2] uppercase tracking-[2px] bg-black max-w-fit mx-auto group transition transition-fast\"><span class=\"text pr-[12px] w-full\"> Let&#39;s Design My Logo </span><span class=\"icon w-auto flex-0\"><svg class=\"transition transition-fast group-hover:rotate-45\" width=\"20\" height=\"20\" viewBox=\"0 0 20 20\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M3.75 16.25L16.25 3.75M16.25 3.75L6.875 3.75M16.25 3.75V13.125\" stroke=\"white\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg></span></a></div></div></div>", 1);
 var _hoisted_3 = [_hoisted_2];
 function render(_ctx, _cache) {
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("section", _hoisted_1, _hoisted_3);
@@ -34573,7 +34585,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_laravel_mix_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "/* Optional styling for dropdown */\n@media only screen and (min-width: 1024px) {\n.dropdown-list[data-v-32e7e46e] {\n    box-shadow: 0 5px 12px 3px #000000;\n}\n}\n.dropdown-item[data-v-32e7e46e]:hover {\n  background-color: #e2e8f0;\n  /* Replace with your brand color */\n}\n.industry-search-input[data-v-32e7e46e] {\n  transition: border-color 0.3s, box-shadow 0.3s;\n}\n.industry-search-input.focused[data-v-32e7e46e] {\n  padding-top: 32px;\n  padding-bottom: 17px;\n}\n.industry-search-input[data-v-32e7e46e]:focus, .industry-search-input[data-v-32e7e46e]:active {\n  outline: none;\n  padding-top: 32px;\n  padding-bottom: 17px;\n}\n.search-industry-input-field[data-v-32e7e46e] {\n  position: relative;\n}\n.search-industry-input-field.focused label[data-v-32e7e46e] {\n  top: 10px;\n  transition: color 0.3s, top 0.3s;\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "/* Optional styling for dropdown */\n@media only screen and (min-width: 1024px) {\n.dropdown-list[data-v-32e7e46e] {\n    box-shadow: 0 5px 12px 3px rgba(0, 0, 0, 0.1);\n}\n}\n.dropdown-item[data-v-32e7e46e]:hover {\n  background-color: #e2e8f0;\n  /* Replace with your brand color */\n}\n.industry-search-input[data-v-32e7e46e] {\n  transition: border-color 0.3s, box-shadow 0.3s;\n}\n.industry-search-input.focused[data-v-32e7e46e] {\n  padding-top: 32px;\n  padding-bottom: 17px;\n}\n.industry-search-input[data-v-32e7e46e]:focus, .industry-search-input[data-v-32e7e46e]:active {\n  outline: none;\n  padding-top: 32px;\n  padding-bottom: 17px;\n}\n.search-industry-input-field[data-v-32e7e46e] {\n  position: relative;\n}\n.search-industry-input-field.focused label[data-v-32e7e46e] {\n  top: 10px;\n  transition: color 0.3s, top 0.3s;\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
