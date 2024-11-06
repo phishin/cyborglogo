@@ -1,6 +1,6 @@
 window.axios = require('axios');
 window.fuse = require('fuse.js').default;
-import { createApp, reactive, provide, inject } from 'vue';
+import { createApp, reactive, provide, ref } from 'vue';
 
 // Lazyload
 import LazyLoad from "vanilla-lazyload";
@@ -45,10 +45,12 @@ import FrequentlyAskedQuestions from "./components/homepage/FrequentlyAskedQuest
 import CreationFlowScreens from "./CreationFlow/CreationFlowScreens.vue";
 
 
-// Create the reactive global state
+// Create the reactive global states to pass through modules and screens
 const globalCreationState = reactive({
     creationStep: 0
 });
+
+const createMyLogoIsActive = ref(false);  // This is now a reactive boolean
 
 
 /* vue create app */
@@ -94,6 +96,7 @@ createApp({
 
     setup() {
         provide('globalCreationState', globalCreationState);
+        provide('createMyLogoIsActive', createMyLogoIsActive);
     },
 
 
