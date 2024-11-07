@@ -42,7 +42,7 @@ import ContactSupportForm from "./components/homepage/ContactSupportForm.vue";
 import FrequentlyAskedQuestions from "./components/homepage/FrequentlyAskedQuestions.vue";
 
 // Logo creation screens
-import CreationFlowScreens from "./CreationFlow/CreationFlowScreens.vue";
+import CreationFlowScreens from "./components/CreationFlow/CreationFlowScreens.vue";
 
 
 // Create the reactive global states to pass through modules and screens

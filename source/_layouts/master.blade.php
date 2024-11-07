@@ -51,7 +51,9 @@
     <body>
         <div id="app">
             <main-site-wrapper-screen :show-password-screen="true">
+
                 <div id="site-overlay" class="site-overlay pointer-events-none absolute w-full h-full inset-0 bg-black opacity-0"></div>
+
                     <header-section></header-section>
                     <main role="main">
                             @yield('body')
