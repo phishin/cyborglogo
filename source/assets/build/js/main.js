@@ -21958,6 +21958,18 @@ __webpack_require__.r(__webpack_exports__);
     // Set initial progress status to 25%
     var progressStatus = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(25);
 
+    // Store the selected industry
+    var selectedIndustry = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(null);
+    var selectedLogoStyle = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(null);
+
+    // Function to handle industry selection from CreationFlowStep1
+    var handleSelectIndustry = function handleSelectIndustry(industry) {
+      selectedIndustry.value = industry;
+    };
+    var handleSelectedLogoStyle = function handleSelectedLogoStyle(style) {
+      selectedLogoStyle.value = style; // Store the selected logo style in the parent
+    };
+
     // Function to handle progress updates from the child
     var updateProgress = function updateProgress(value) {
       progressStatus.value = value;
@@ -21993,6 +22005,10 @@ __webpack_require__.r(__webpack_exports__);
       globalCreationState: globalCreationState,
       createMyLogoIsActive: createMyLogoIsActive,
       progressStatus: progressStatus,
+      selectedIndustry: selectedIndustry,
+      selectedLogoStyle: selectedLogoStyle,
+      handleSelectIndustry: handleSelectIndustry,
+      handleSelectedLogoStyle: handleSelectedLogoStyle,
       updateProgress: updateProgress,
       advanceStep: advanceStep,
       previousStep: previousStep,
@@ -22035,39 +22051,32 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   __name: 'CreationFlowStep1',
-  emits: ["updateProgress"],
+  props: {
+    selectedIndustry: Object // Receive industry selection from parent
+  },
+  emits: ["updateProgress", "selectIndustry"],
   setup: function setup(__props, _ref) {
+    var _props$selectedIndust;
     var __expose = _ref.expose,
       __emit = _ref.emit;
     __expose();
-    var selectedIndustry = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(null);
-    var query = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)("");
+    var props = __props;
+    var selectedIndustryQueryValue = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(((_props$selectedIndust = props.selectedIndustry) === null || _props$selectedIndust === void 0 ? void 0 : _props$selectedIndust.name) || "");
     var results = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)([]);
     var showDropdown = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(false);
     var highlightedIndex = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(-1); // Track highlighted item index
 
+    // variable for selected industry
+    var selectedIndustry = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(props.selectedIndustry || null);
+
+    // Emit the progress status to update it and also the industry that's selected
     var emit = __emit;
 
     // Inject the global state
     var globalCreationState = (0,vue__WEBPACK_IMPORTED_MODULE_0__.inject)('globalCreationState');
     var createMyLogoIsActive = (0,vue__WEBPACK_IMPORTED_MODULE_0__.inject)('createMyLogoIsActive');
 
-    /* advance and back steps */
-    var advanceCreationStep = function advanceCreationStep() {
-      globalCreationState.creationStep += 1;
-      emit("updateProgress", 35);
-      console.log('Advancing to step:', globalCreationState.creationStep);
-    };
-    var previousCreationStep = function previousCreationStep() {
-      if (globalCreationState.creationStep > 1) {
-        globalCreationState.creationStep -= 1;
-        emit("updateProgress", 0);
-        console.log('Going back to step:', globalCreationState.creationStep);
-      }
-    };
-
     /* Industry Search Field Dropdown input field values */
-
     // list all industries to show in the dropdown
     var industries = [{
       id: 1,
@@ -22106,19 +22115,22 @@ __webpack_require__.r(__webpack_exports__);
 
     // handle search
     var search = function search() {
-      results.value = query.value ? fuse.search(query.value) : [];
+      results.value = selectedIndustryQueryValue.value ? fuse.search(selectedIndustryQueryValue.value) : industries; // Show full list if empty
     };
-    var selectItem = function selectItem(item) {
-      query.value = item.name;
-      selectedIndustry.value = item; // Set the selected item
+    // handle selection of industry item
+    var selectIndustry = function selectIndustry(item) {
+      selectedIndustryQueryValue.value = item.name;
+      selectedIndustry.value = item;
+      emit("selectIndustry", item); // Emit to parent
       showDropdown.value = false;
     };
     var hideDropdown = function hideDropdown() {
       if (!industries.some(function (industry) {
-        return industry.name.toLowerCase() === query.value.toLowerCase();
+        return industry.name.toLowerCase() === selectedIndustryQueryValue.value.toLowerCase();
       })) {
-        query.value = "";
+        selectedIndustryQueryValue.value = "";
         selectedIndustry.value = null; // Clear selection if no match
+        emit("selectIndustry", null); // Emit null to clear selection in parent
       }
       setTimeout(function () {
         showDropdown.value = false;
@@ -22127,7 +22139,7 @@ __webpack_require__.r(__webpack_exports__);
 
     // Check if the input is in "focused" state for styling
     var validIndustryInputValue = (0,vue__WEBPACK_IMPORTED_MODULE_0__.computed)(function () {
-      return showDropdown.value || query.value.trim() !== "";
+      return showDropdown.value || selectedIndustryQueryValue.value.trim() !== "";
     });
 
     // Check if a valid selection has been made
@@ -22146,39 +22158,64 @@ __webpack_require__.r(__webpack_exports__);
         highlightedIndex.value = (highlightedIndex.value - 1 + results.value.length) % results.value.length;
       } else if (event.key === "Enter" && highlightedIndex.value >= 0) {
         // Select the highlighted item on Enter key
-        selectItem(results.value[highlightedIndex.value].item);
+        selectIndustry(results.value[highlightedIndex.value].item);
       }
     };
 
-    // Add and remove event listeners for keydown
+    /* advance and back steps */
+    var advanceCreationStep = function advanceCreationStep() {
+      globalCreationState.creationStep += 1;
+      emit("updateProgress", 35);
+      console.log('Advancing to step:', globalCreationState.creationStep);
+    };
+    var previousCreationStep = function previousCreationStep() {
+      if (globalCreationState.creationStep > 1) {
+        globalCreationState.creationStep -= 1;
+        emit("updateProgress", 0);
+        console.log('Going back to step:', globalCreationState.creationStep);
+      }
+    };
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.watch)(function () {
+      return props.selectedIndustry;
+    }, function (newVal) {
+      if (newVal) {
+        selectedIndustryQueryValue.value = newVal.name; // Update input field with the industry name
+        selectedIndustry.value = newVal;
+      }
+    });
     (0,vue__WEBPACK_IMPORTED_MODULE_0__.onMounted)(function () {
       globalCreationState.creationStep = 1;
       window.addEventListener("keydown", handleKeyDown);
+      if (props.selectedIndustry) {
+        selectedIndustryQueryValue.value = props.selectedIndustry.name;
+      }
     });
     (0,vue__WEBPACK_IMPORTED_MODULE_0__.onUnmounted)(function () {
       window.removeEventListener("keydown", handleKeyDown);
     });
     var __returned__ = {
-      selectedIndustry: selectedIndustry,
-      query: query,
+      props: props,
+      selectedIndustryQueryValue: selectedIndustryQueryValue,
       results: results,
       showDropdown: showDropdown,
       highlightedIndex: highlightedIndex,
+      selectedIndustry: selectedIndustry,
       emit: emit,
       globalCreationState: globalCreationState,
       createMyLogoIsActive: createMyLogoIsActive,
-      advanceCreationStep: advanceCreationStep,
-      previousCreationStep: previousCreationStep,
       industries: industries,
       fuse: fuse,
       search: search,
-      selectItem: selectItem,
+      selectIndustry: selectIndustry,
       hideDropdown: hideDropdown,
       validIndustryInputValue: validIndustryInputValue,
       isValidSelection: isValidSelection,
       handleKeyDown: handleKeyDown,
+      advanceCreationStep: advanceCreationStep,
+      previousCreationStep: previousCreationStep,
       ref: vue__WEBPACK_IMPORTED_MODULE_0__.ref,
       computed: vue__WEBPACK_IMPORTED_MODULE_0__.computed,
+      watch: vue__WEBPACK_IMPORTED_MODULE_0__.watch,
       onMounted: vue__WEBPACK_IMPORTED_MODULE_0__.onMounted,
       onUnmounted: vue__WEBPACK_IMPORTED_MODULE_0__.onUnmounted,
       inject: vue__WEBPACK_IMPORTED_MODULE_0__.inject,
@@ -22218,22 +22255,43 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-// Inject the global state
+// Inject the global states set as the "create my logo state"
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   __name: 'CreationFlowStep2',
-  emits: ["updateProgress"],
+  props: {
+    selectedIndustry: Object,
+    // Receive industry selection from parent
+    selectedLogoStyle: String
+  },
+  emits: ["updateProgress", "selectIndustry", "selectedLogoStyle"],
   setup: function setup(__props, _ref) {
     var __expose = _ref.expose,
       __emit = _ref.emit;
     __expose();
     var globalCreationState = (0,vue__WEBPACK_IMPORTED_MODULE_0__.inject)('globalCreationState');
     var createMyLogoIsActive = (0,vue__WEBPACK_IMPORTED_MODULE_0__.inject)('createMyLogoIsActive');
-    var logoStyleSelection = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(null);
+
+    // set a prop to store the selected industry from step 1
+    var props = __props;
+
+    // variable for selected industry
+    var selectedIndustry = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(props.selectedIndustry || null);
+
+    // variable for selected logoStyle
+    var selectedLogoStyle = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(props.selectedLogoStyle || null);
+
+    // function when clicking on a logo style to select it
+    var selectLogoStyle = function selectLogoStyle(style) {
+      selectedLogoStyle.value = style; // Set the selected style
+      emit("selectedLogoStyle", style); // Emit the selected style to the parent
+    };
 
     // Check if a valid selection has been made
     var isValidSelection = (0,vue__WEBPACK_IMPORTED_MODULE_0__.computed)(function () {
-      return !!logoStyleSelection.value;
+      return !!selectedLogoStyle.value;
     });
+
+    // Emit the progress status to update it and also the industry that's selected
     var emit = __emit;
 
     /* advance and back steps */
@@ -22256,13 +22314,17 @@ __webpack_require__.r(__webpack_exports__);
     var __returned__ = {
       globalCreationState: globalCreationState,
       createMyLogoIsActive: createMyLogoIsActive,
-      logoStyleSelection: logoStyleSelection,
+      props: props,
+      selectedIndustry: selectedIndustry,
+      selectedLogoStyle: selectedLogoStyle,
+      selectLogoStyle: selectLogoStyle,
       isValidSelection: isValidSelection,
       emit: emit,
       advanceCreationStep: advanceCreationStep,
       previousCreationStep: previousCreationStep,
       ref: vue__WEBPACK_IMPORTED_MODULE_0__.ref,
       computed: vue__WEBPACK_IMPORTED_MODULE_0__.computed,
+      watch: vue__WEBPACK_IMPORTED_MODULE_0__.watch,
       onMounted: vue__WEBPACK_IMPORTED_MODULE_0__.onMounted,
       onUnmounted: vue__WEBPACK_IMPORTED_MODULE_0__.onUnmounted,
       inject: vue__WEBPACK_IMPORTED_MODULE_0__.inject,
@@ -23085,11 +23147,16 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       return [$setup.globalCreationState.creationStep === 1 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)($setup["CreationFlowStep1"], {
         key: $setup.globalCreationState.creationStep,
+        selectedIndustry: $setup.selectedIndustry,
+        onSelectIndustry: $setup.handleSelectIndustry,
         onUpdateProgress: $setup.updateProgress
-      })) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $setup.globalCreationState.creationStep === 2 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)($setup["CreationFlowStep2"], {
+      }, null, 8 /* PROPS */, ["selectedIndustry"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $setup.globalCreationState.creationStep === 2 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)($setup["CreationFlowStep2"], {
         key: $setup.globalCreationState.creationStep,
+        selectedIndustry: $setup.selectedIndustry,
+        selectedLogoStyle: $setup.selectedLogoStyle,
+        onSelectedLogoStyle: $setup.handleSelectedLogoStyle,
         onUpdateProgress: $setup.updateProgress
-      })) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)];
+      }, null, 8 /* PROPS */, ["selectedIndustry", "selectedLogoStyle"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)];
     }),
     _: 1 /* STABLE */
   }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Buttons for Development (remove before launch) "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
@@ -23187,7 +23254,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   }, " Select Specialty (e.g., Plumbing, Electrical) ", -1 /* HOISTED */)), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
     type: "text",
     "onUpdate:modelValue": _cache[0] || (_cache[0] = function ($event) {
-      return $setup.query = $event;
+      return $setup.selectedIndustryQueryValue = $event;
     }),
     onInput: $setup.search,
     onFocus: _cache[1] || (_cache[1] = function ($event) {
@@ -23198,11 +23265,11 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([{
       'focused': $setup.validIndustryInputValue
     }, "industry-search-input border-[3px] border-neutral-200 block w-full text-black font-medium min-h-[64px] max-h-[64px] px-[18px] transition transition-fast focus:border-brand-electric-blue active:border-brand-electric-blue"])
-  }, null, 34 /* CLASS, NEED_HYDRATION */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $setup.query]])], 2 /* CLASS */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Dropdown for search results "), $setup.showDropdown && $setup.results.length ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("ul", _hoisted_6, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($setup.results, function (result, index) {
+  }, null, 34 /* CLASS, NEED_HYDRATION */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $setup.selectedIndustryQueryValue]])], 2 /* CLASS */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Dropdown for search results "), $setup.showDropdown && $setup.results.length ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("ul", _hoisted_6, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($setup.results, function (result, index) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("li", {
-      key: result.item.id,
+      key: result.item.name,
       onMousedown: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function ($event) {
-        return $setup.selectItem(result.item);
+        return $setup.selectIndustry(result.item);
       }, ["prevent"]),
       "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(['dropdown-item text-black text-[16px] md:text-[18px] lg:text-[20px] font-medium lg:font-semibold py-[17px] px-[20px] lg:py-[12px] cursor-pointer transition transition-fast', {
         'bg-neutral-100 text-brand-electric-blue': index === $setup.highlightedIndex
@@ -23259,25 +23326,19 @@ var _hoisted_6 = {
   "class": "logo-style-item w-full relative pb-[40px] md:pb-0 md:max-w-[50%] lg:max-w-[330px]"
 };
 var _hoisted_7 = {
-  "class": "logo-style-image w-full h-full flex flex-col justify-center items-center py-[50px] bg-neutral-100 px-[40px]"
-};
-var _hoisted_8 = {
   "class": "logo-style-item w-full relative md:max-w-[50%] lg:max-w-[330px]"
 };
-var _hoisted_9 = {
-  "class": "logo-style-image w-full h-full flex flex-col justify-center items-center py-[50px] bg-neutral-100 px-[40px]"
-};
-var _hoisted_10 = {
+var _hoisted_8 = {
   "class": "bottom-button advance-button w-full relative flex flex-col justify-center items-center lg:hidden pt-[100px]"
 };
-var _hoisted_11 = {
+var _hoisted_9 = {
   "class": "bottom-content w-full relative lg:mt-[290px] hidden lg:block"
 };
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("section", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Top Prev/Next Buttons on Desktop "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Previous step  "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
     onClick: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)($setup.previousCreationStep, ["prevent"]),
     "class": "previous-step-button flex flex-row gap-[12px] py-[25px] px-[24px] max-w-fit border-[4px] border-black uppercase font-black text-[18px] leading-[2px] tracking-[1px] text-neutral-700 items-center h-[68px] transition transition-fast"
-  }, _cache[0] || (_cache[0] = [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("svg", {
+  }, _cache[2] || (_cache[2] = [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("svg", {
     width: "14",
     height: "12",
     viewBox: "0 0 14 12",
@@ -23290,7 +23351,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     fill: "#1F2937"
   })], -1 /* HOISTED */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Back One Step ")])), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Next step  "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["next-step-button flex flex-row gap-[12px] py-[25px] px-[24px] max-w-fit uppercase font-black text-[18px] leading-[1] tracking-[2px] text-white bg-brand-200 items-center h-[68px] transition transition-fast", $setup.isValidSelection ? 'opacity-100 pointer-events-auto' : 'opacity-50 pointer-events-none'])
-  }, _cache[1] || (_cache[1] = [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Continue "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("svg", {
+  }, _cache[3] || (_cache[3] = [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Continue "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("svg", {
     width: "14",
     height: "12",
     viewBox: "0 0 14 12",
@@ -23301,28 +23362,38 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "clip-rule": "evenodd",
     d: "M7.34171 0.508457C7.79732 0.0528452 8.53601 0.0528451 8.99162 0.508457L13.6583 5.17512C14.1139 5.63074 14.1139 6.36943 13.6583 6.82504L8.99162 11.4917C8.53601 11.9473 7.79732 11.9473 7.34171 11.4917C6.8861 11.0361 6.8861 10.2974 7.34171 9.84179L10.0168 7.16675L1.16667 7.16675C0.522335 7.16675 -2.81646e-08 6.64441 0 6.00008C2.81647e-08 5.35575 0.522335 4.83342 1.16667 4.83342H10.0168L7.34171 2.15837C6.8861 1.70276 6.8861 0.964069 7.34171 0.508457Z",
     fill: "white"
-  })], -1 /* HOISTED */)]), 2 /* CLASS */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Step One Content "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [_cache[5] || (_cache[5] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h1", {
+  })], -1 /* HOISTED */)]), 2 /* CLASS */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Step One Content "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [_cache[7] || (_cache[7] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h1", {
     "class": "block relative text-black font-bold text-[20px] md:text-[26px] lg:text-[32px] leading-[1.2]"
-  }, " Full business name or initials ", -1 /* HOISTED */)), _cache[6] || (_cache[6] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h2", {
+  }, " Full business name or initials ", -1 /* HOISTED */)), _cache[8] || (_cache[8] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h2", {
     "class": "block relative text-black font-normal text-[18px] md:text-[20px] lg:text-[24px] pt-[20px] leading-[1.35]"
-  }, " Chose one, which ensures your logo reflects your brand’s style. ", -1 /* HOISTED */)), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Logo Style Selection "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_6, [_cache[2] || (_cache[2] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h3", {
+  }, " Chose one, which ensures your logo reflects your brand’s style. ", -1 /* HOISTED */)), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Logo Style Selection "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_6, [_cache[4] || (_cache[4] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h3", {
     "class": "block relative w-full text-black font-bold text-[16px] pb-[15px] leading-[1.1] text-center"
-  }, " Full business name ", -1 /* HOISTED */)), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["ImageElement"], {
+  }, " Full business name ", -1 /* HOISTED */)), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+    "class": "logo-style-selector logo-style-image w-full h-full flex flex-col justify-center items-center py-[50px] bg-neutral-100 px-[40px]",
+    onClick: _cache[0] || (_cache[0] = function ($event) {
+      return $setup.selectLogoStyle('Full business name');
+    })
+  }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["ImageElement"], {
     "addon-classes": "w-full h-full object-contain block mx-auto relative max-h-[74px]",
     "image-source": "/assets/img/logo-style-full-business-name.png",
     "lazy-load": true,
     "alt-text": "Full Business Name Style Logo"
-  })])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_8, [_cache[3] || (_cache[3] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h3", {
+  })])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, [_cache[5] || (_cache[5] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h3", {
     "class": "block relative w-full text-black font-bold text-[16px] pb-[15px] leading-[1.1] text-center"
-  }, "Initials (2 or more letters)", -1 /* HOISTED */)), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_9, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["ImageElement"], {
+  }, "Initials (2 or more letters)", -1 /* HOISTED */)), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+    "class": "logo-style-selector logo-style-image w-full h-full flex flex-col justify-center items-center py-[50px] bg-neutral-100 px-[40px]",
+    onClick: _cache[1] || (_cache[1] = function ($event) {
+      return $setup.selectLogoStyle('Initials');
+    })
+  }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["ImageElement"], {
     "addon-classes": "w-full h-full object-contain block mx-auto relative",
     "image-source": "/assets/img/logo-style-initials.png",
     "lazy-load": true,
     "alt-text": "Full Business Name Style Logo"
-  })])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_10, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+  })])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_8, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
     onClick: $setup.advanceCreationStep,
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["bg-brand-200 text-white font-bold flex flex-row items-center justify-between uppercase gap-[12px] py-[16px] px-[17px] transition transition-fast", $setup.isValidSelection ? 'opacity-100 pointer-events-auto lg:hidden' : 'opacity-50 pointer-events-none lg:hidden'])
-  }, _cache[4] || (_cache[4] = [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Continue "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("svg", {
+  }, _cache[6] || (_cache[6] = [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Continue "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("svg", {
     width: "14",
     height: "12",
     viewBox: "0 0 14 12",
@@ -23333,7 +23404,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "clip-rule": "evenodd",
     d: "M7.34171 0.508457C7.79732 0.0528452 8.53601 0.0528451 8.99162 0.508457L13.6583 5.17512C14.1139 5.63074 14.1139 6.36943 13.6583 6.82504L8.99162 11.4917C8.53601 11.9473 7.79732 11.9473 7.34171 11.4917C6.8861 11.0361 6.8861 10.2974 7.34171 9.84179L10.0168 7.16675L1.16667 7.16675C0.522335 7.16675 -2.81646e-08 6.64441 0 6.00008C2.81647e-08 5.35575 0.522335 4.83342 1.16667 4.83342H10.0168L7.34171 2.15837C6.8861 1.70276 6.8861 0.964069 7.34171 0.508457Z",
     fill: "white"
-  })], -1 /* HOISTED */)]), 2 /* CLASS */)])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_11, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["FrequentlyAskedQuestions"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["ContactSupportForm"])])]);
+  })], -1 /* HOISTED */)]), 2 /* CLASS */)])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_9, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["FrequentlyAskedQuestions"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["ContactSupportForm"])])]);
 }
 
 /***/ }),
